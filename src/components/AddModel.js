@@ -103,6 +103,7 @@ function AddModel({ Title, Description, Price, Close, Images, SaveChanges, EditI
               <Form.Label>{Images}</Form.Label>
               <Form.Control
                 type="file"
+                multiple
                 name="images"
                 onChange={handleInputChange}
               />

@@ -106,8 +106,6 @@ function Productpage({ stars, reviews }) {
                               <img src={image?.url} className="img-fluid" alt="..." />
                             </div>
                           )}
-
-
                         </div>
                       </div>
                     </div>
@@ -115,9 +113,6 @@ function Productpage({ stars, reviews }) {
                   </div>
                 </div>
               </div>
-
-
-
 
 
             </div>

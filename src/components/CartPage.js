@@ -6,8 +6,6 @@ import { PiGreaterThanBold } from "react-icons/pi";
 function CartPage() {
   const [cartItems, setCartItems] = useState([])
 
-  console.log(cartItems, "cartItemscartItems")
-
   const handleAddbutton = (id) => {
 
     const existingItems = JSON.parse(localStorage.getItem('cartItems')) || [];
@@ -67,7 +65,9 @@ function CartPage() {
     setCartItems(storedItems)
   }, []);
 
-
+  const handleDelete = (() => {
+    console.log("hello world");
+  })
 
 
 
@@ -76,7 +76,6 @@ function CartPage() {
       <main>
         <section className="my-cart-section">
           <div className="container">
-       
 
             {cartItems?.map((item, index) => {
               return (
@@ -122,14 +121,12 @@ function CartPage() {
                           <p className="pt-price t-black15">₹ {item?.quantity * item?.price}</p>
                         </td>
 
-                        {/* Add more td elements here for other item details */}
                         <td className="text-right">
-                          <div onClick={() => { }} className="actions ml-3">
-                            {/* <a href="#" className="action-item mr-2" data-dismiss="alert"> */}
+                          <div onClick={handleDelete} className="actions ml-3" style={{ cursor: 'pointer' }}>
+
                             <svg width={18} height={18} viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
                               <path fillRule="evenodd" clipRule="evenodd" d="M17.7071 1.70711C18.0976 1.31658 18.0976 0.683417 17.7071 0.292893C17.3166 -0.0976311 16.6834 -0.0976311 16.2929 0.292893L9 7.58579L1.70711 0.292893C1.31658 -0.0976311 0.683418 -0.0976311 0.292894 0.292893C-0.0976295 0.683417 -0.0976295 1.31658 0.292894 1.70711L7.58579 9L0.292893 16.2929C-0.0976311 16.6834 -0.0976311 17.3166 0.292893 17.7071C0.683418 18.0976 1.31658 18.0976 1.70711 17.7071L9 10.4142L16.2929 17.7071C16.6834 18.0976 17.3166 18.0976 17.7071 17.7071C18.0976 17.3166 18.0976 16.6834 17.7071 16.2929L10.4142 9L17.7071 1.70711Z" fill="#AFAFAF" />
                             </svg>
-                            {/* </a> */}
                           </div>
                         </td>
                       </tr>

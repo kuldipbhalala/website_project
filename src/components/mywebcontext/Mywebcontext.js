@@ -14,10 +14,9 @@ export const Mywebcontext = ({ children }) => {
   const baseURI = "https://student-project-tau.vercel.app/api/product"
 
 
-  const cartkey = async(key) => {
-    const productdata =await axios.get(`${baseURI}/singleproduct/${key}`)
+  const cartkey = async (key) => {
+    const productdata = await axios.get(`${baseURI}/singleproduct/${key}`)
     setSelectData(productdata?.data?.data)
-
   }
 
   useEffect(() => {

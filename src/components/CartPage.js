@@ -80,16 +80,7 @@ function CartPage() {
 
             {cartItems?.map((item, index) => {
               return (
-                <div className="table-responsive my-cart mt-7     <div className="row">
-                <div className="pr-title mb-4">
-                  <h3 className="mt-4 store-title text-primary">My Cart</h3>
-                  <div className="payment-step">
-                    <a href="CartPage" className="btn btn-mycart active">1 - My Cart</a>
-                    <a href="Checkout" className="btn btn-mycart">2 - Customer</a>
-                    <a href="Mypayment" className="btn btn-mycart">3 - Payment</a>
-                  </div>
-                </div>
-              </div>" key={index}>
+                <div className="table-responsive my-cart mt-7" key={index}>
                   <table className="table table-cards align-items-center">
                     <tbody className="list">
                       <tr className="alert">

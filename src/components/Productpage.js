@@ -11,22 +11,39 @@ function Productpage({ stars, reviews }) {
 
   const baseURI = `https://fakestoreapi.com/products`
 
-  // useEffect(() => {
-
-  //   const existingItems = JSON.parse(localStorage.getItem('items')) || [];
-
-  //   if (selectData && !existingItems.some(item => item._id === selectData._id)) {
-  //     existingItems.push(selectData);
-  //   }
-
-  //   localStorage.setItem('items', JSON.stringify(existingItems));
-  // }, [selectData]);
-
-
   const handleclick = (key) => {
-    cartkey(key)
+    cartkey(key);
     navigate("/Productpage");
   }
+
+
+  const handlebutton = () => {
+
+    const existingItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+
+    const newItem = {
+      _id: selectData._id,
+      quantity: 1  // Default quantity when adding to cart
+    };
+
+    const existingItemIndex = existingItems.findIndex(item => item._id === newItem._id);
+
+    if (existingItemIndex !== -1) {
+      // If item already exists, increment its quantity
+      existingItems[existingItemIndex].quantity += 1;
+    } else {
+      existingItems.push(newItem);
+    }
+
+    localStorage.setItem('cartItems', JSON.stringify(existingItems));
+
+    console.log('Item added to cart:', newItem);
+
+    navigate("/CartPage");
+
+  };
+
+
 
   const getSingleData = () => {
     !selectData && navigate("/");
@@ -124,14 +141,16 @@ function Productpage({ stars, reviews }) {
                 <span className="h3 mb-0 p-price">₹{selectData?.price} </span>
               </div>
               <div className="cart-buttons">
-                <Link className="btn btn-primary rounded-pill btn-icon shadow hover-shadow-lg hover-translate-y-n3" style={{ color: 'white' }} to="/CartPage">Add to cart
-                  <span className="btn-inner--text" onClick={handleCount}>  </span>
-                  <span className="btn-inner--icon">
-                    <svg className="w-auto" height={21} viewBox="0 0 16 21" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <path fillRule="evenodd" clipRule="evenodd" d="M4 8.5C4 9.05229 4.44772 9.5 5 9.5C5.55228 9.5 6 9.05229 6 8.5V6.5H10V8.5C10 9.05229 10.4477 9.5 11 9.5C11.5523 9.5 12 9.05229 12 8.5V6.5H14V15.5C14 17.1569 12.6569 18.5 11 18.5H5C3.34315 18.5 2 17.1569 2 15.5V6.5H4V8.5ZM6 4.5H10C10 3.39543 9.10457 2.5 8 2.5C6.89543 2.5 6 3.39543 6 4.5ZM12 4.5C12 2.29086 10.2091 0.5 8 0.5C5.79086 0.5 4 2.29086 4 4.5L1 4.5C0.447715 4.5 0 4.94772 0 5.5V15.5C0 18.2614 2.23858 20.5 5 20.5H11C13.7614 20.5 16 18.2614 16 15.5V5.5C16 4.94772 15.5523 4.5 15 4.5H12Z" fill="white" />
-                    </svg>
-                  </span>
-                </Link>
+                <button onClick={handlebutton} className="btn btn-primary rounded-pill btn-icon shadow hover-shadow-lg hover-translate-y-n3">
+                  <Link style={{ color: 'white' }} to="/CartPage">Add to cart
+                    <span className="btn-inner--text" onClick={handleCount}>  </span>
+                    <span className="btn-inner--icon">
+                      <svg className="w-auto" height={21} viewBox="0 0 16 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path fillRule="evenodd" clipRule="evenodd" d="M4 8.5C4 9.05229 4.44772 9.5 5 9.5C5.55228 9.5 6 9.05229 6 8.5V6.5H10V8.5C10 9.05229 10.4477 9.5 11 9.5C11.5523 9.5 12 9.05229 12 8.5V6.5H14V15.5C14 17.1569 12.6569 18.5 11 18.5H5C3.34315 18.5 2 17.1569 2 15.5V6.5H4V8.5ZM6 4.5H10C10 3.39543 9.10457 2.5 8 2.5C6.89543 2.5 6 3.39543 6 4.5ZM12 4.5C12 2.29086 10.2091 0.5 8 0.5C5.79086 0.5 4 2.29086 4 4.5L1 4.5C0.447715 4.5 0 4.94772 0 5.5V15.5C0 18.2614 2.23858 20.5 5 20.5H11C13.7614 20.5 16 18.2614 16 15.5V5.5C16 4.94772 15.5523 4.5 15 4.5H12Z" fill="white" />
+                      </svg>
+                    </span>
+                  </Link>
+                </button>
               </div>
               <div className="store-tabs" id="accordion" role="tablist">
                 <div className="card">
@@ -170,7 +189,7 @@ function Productpage({ stars, reviews }) {
             {
               product?.data?.slice(0, 4)?.map((items, key) => {
                 return (
-                  <>
+                  <div key={key}>
                     <div className="col-xl-3 col-lg-4 col-sm-6 product-box">
                       <div className="card card-product">
                         <div className="card-image">
@@ -204,7 +223,7 @@ function Productpage({ stars, reviews }) {
                         </div>
                       </div>
                     </div>
-                  </>
+                  </div>
 
                 )
               })

@@ -115,7 +115,7 @@ function Home({ stars, reviews }) {
                       {
                         product?.data.slice(0, 8)?.map((items, key) => (
 
-                          <div className="col-xl-3 col-lg-4 col-sm-6 product-box">
+                          <div className="col-xl-3 col-lg-4 col-sm-6 product-box" key={key}>
                             <div className="card card-product">
                               <div className="card-image">
                                 {

@@ -2,7 +2,7 @@ import axios from 'axios'
 import React, { useContext } from 'react'
 import Star from '../Star';
 import Mywebcontextcall from '../mywebcontext/Mywebcontext';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 
 
@@ -120,9 +120,9 @@ function Home({ stars, reviews }) {
                               <div className="card-image">
                                 {
 
-                                  <a href="#">
+                                  <Link to='productpage' onClick={() => handleclick(items?._id)}>
                                     <img alt="Image placeholder" src={items?.gallery?.[0]?.url} style={{ aspectRatio: 3 / 2, objectFit: 'contain', }} className="img-center img-fluid" />
-                                  </a>
+                                  </Link>
 
                                 }
                               </div>

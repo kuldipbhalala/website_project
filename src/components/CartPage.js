@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { PiLessThanBold, PiGreaterThanBold } from 'react-icons/pi';
+import { Link } from 'react-router-dom';
+import Mywebcontextcall from './mywebcontext/Mywebcontext';
 
 function CartPage() {
-  const [cartItems, setCartItems] = useState([]);
-
+  const { cartItems, setCartItems } = useContext(Mywebcontextcall)
   const handleAddbutton = (id) => {
     const existingItems = JSON.parse(localStorage.getItem('cartItems')) || [];
 
@@ -44,11 +45,11 @@ function CartPage() {
     setCartItems(updatedItems);
   };
 
-  useEffect(() => {
-    const cartItems = localStorage.getItem('cartItems') || "[]";
-    const storedItems = JSON.parse(cartItems);
-    setCartItems(storedItems);
-  }, []);
+  // useEffect(() => {
+  //   const cartItems = localStorage.getItem('cartItems') || "[]";
+  //   const storedItems = JSON.parse(cartItems);
+  //   setCartItems(storedItems);
+  // }, []);
 
   return (
     <div>
@@ -127,13 +128,13 @@ function CartPage() {
                       </div>
                     </div>
                     <div className="col-md-6 order-md-1">
-                      <a href="#" className="btn btn-white btn-icon rounded-pill hover-translate-y-n3">
+                      <Link href="#" className="btn btn-white btn-icon rounded-pill hover-translate-y-n3">
                         <span className="btn-inner--text text-primary">Proceed to checkout</span>
                         <svg className="w-auto" height={21} viewBox="0 0 16 21" fill="none" xmlns="http://www.w3.org/2000/svg">
                           <path fillRule="evenodd" clipRule="evenodd" d="M4 8.5C4 9.05229 4.44772 9.5 5 9.5C5.55228 9.5 6 9.05229 6 8.5V6.5H10V8.5C10 9.05229 10.4477 9.5 11 9.5C11.5523 9.5 12 9.05229 12 8.5V6.5H14V15.5C14 17.1569 12.6569 18.5 11 18.5H5C3.34315 18.5 2 17.1569 2 15.5V6.5H4V8.5ZM6 4.5H10C10 3.39543 9.10457 2.5 8 2.5C6.89543 2.5 6 3.39543 6 4.5ZM12 4.5C12 2.29086 10.2091 0.5 8 0.5C5.79086 0.5 4 2.29086 4 4.5L1 4.5C0.447715 4.5 0 4.94772 0 5.5V15.5C0 18.2614 2.23858 20.5 5 20.5H11C13.7614 20.5 16 18.2614 16 15.5V5.5C16 4.94772 15.5523 4.5 15 4.5H12Z" className="svg-color" />
                         </svg>
-                      </a>
-                      <a href="shop-landing.html" className="btn return-shop text-white">Return to shop</a>
+                      </Link>
+
                     </div>
                   </div>
                 </div>

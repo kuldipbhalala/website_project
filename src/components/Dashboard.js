@@ -7,13 +7,18 @@ import Headerpage from './Header/Headerpage';
 import Mywebcontextcall from './mywebcontext/Mywebcontext';
 
 export const Dashboard = () => {
-  const {product,refresh, setRefresh}=useContext(Mywebcontextcall);
+  const { product, refresh, setRefresh, searchData, setSearchData } = useContext(Mywebcontextcall);
   const [show, setShow] = useState(false);
   const [dashboardGet, setDashboardGet] = useState();
   const [deleteshow, setDeleteshow] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [addshow, setAddshow] = useState(false);
-
+  const [formData, setFormData] = useState({
+    title: '',
+    desc: '',
+    price: '',
+    images: null
+  });
   const handleShow = () => setShow(true);
   const handleClose = () => {
     setShow(false);
@@ -24,7 +29,15 @@ export const Dashboard = () => {
   const handleDashbordClose = () => setDeleteshow(false);
 
   const handleAddShow = () => setAddshow(true);
-  const handleAddClose = () => setAddshow(false);
+  const handleAddClose = () => {
+    setFormData({
+      title: '',
+      desc: '',
+      price: '',
+      images: null
+    })
+    setAddshow(false)
+  };
 
   const baseURI = "https://student-project-tau.vercel.app/api/product/updateproduct";
   const baseURIGet = "https://student-project-tau.vercel.app/api/product/getallproduct?search=";
@@ -36,7 +49,7 @@ export const Dashboard = () => {
   }, [product]);
 
   const handleEdit = (product) => {
-    
+
     setSelectedProduct(product);
     handleShow();
   };
@@ -46,13 +59,6 @@ export const Dashboard = () => {
     formData.append('title', editedProduct.title);
     formData.append('desc', editedProduct.desc);
     formData.append('price', editedProduct.price);
-
-
-    const existingImages = editedProduct.gallery.filter(img => !img.file);
-    const images = ["https://res.cloudinary.com/de8e654d7/image/upload/v1722417511/studentProject/1722417511779_12804854_5059350.jpg"]
-    console.log(images, "existingImagesexistingImagesexistingImagesexistingImages")
-
-
     editedProduct.gallery.forEach((img) => {
       if (img.file) {
         formData.append(`gallery`, img.file);
@@ -66,6 +72,7 @@ export const Dashboard = () => {
     })
       .then((response) => {
         handleClose();
+        setSearchData('');
         setRefresh(true);
       })
       .catch(error => {
@@ -75,7 +82,6 @@ export const Dashboard = () => {
 
   const handleAdd = () => {
     handleAddShow();
-
   };
 
   const handleDelete = (id) => {
@@ -147,15 +153,10 @@ export const Dashboard = () => {
         />}
 
         <AddModel
-          EditItem="New Product"
-          Title="Title"
-          Description="Description"
-          Price="Price"
-          Close="Close"
-          Images="Images"
-          SaveChanges="Save Changes"
           addshow={addshow}
           handleAddClose={handleAddClose}
+          formData={formData}
+          setFormData={setFormData}
         />
       </div>
     </>

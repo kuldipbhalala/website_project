@@ -5,7 +5,8 @@ const Mywebcontextcall = createContext();
 
 
 export const Mywebcontext = ({ children }) => {
-
+  const [searchData, setSearchData] = useState("")
+  const [cartItems, setCartItems] = useState([]);
   const [product, setProduct] = useState()
   const [selectData, setSelectData] = useState()
   const [refresh, setRefresh] = useState(true);
@@ -20,19 +21,24 @@ export const Mywebcontext = ({ children }) => {
   }
 
   useEffect(() => {
-    refresh && axios.get(`${baseURI}/getallproduct?search=`).then((response) => {
+    refresh && axios.get(`${baseURI}/getallproduct?search=${searchData}`).then((response) => {
       setProduct(response.data);
       setRefresh(false)
     });
   }, [refresh]);
 
 
+  useEffect(() => {
+    const cartItems = localStorage.getItem('cartItems') || "[]";
+    const storedItems = JSON.parse(cartItems);
+    setCartItems(storedItems);
+  }, []);
 
 
 
   return (
     <div>
-      <Mywebcontextcall.Provider value={{ product, cartkey, selectData, setProduct, refresh, setRefresh }}>
+      <Mywebcontextcall.Provider value={{ product, cartkey, selectData, setProduct, refresh, setRefresh,cartItems, setCartItems,searchData, setSearchData}}>
         {children}
       </Mywebcontextcall.Provider>
     </div>

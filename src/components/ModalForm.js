@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Modal, Button, Form } from 'react-bootstrap';
+import { IoCloseSharp } from 'react-icons/io5';
 
 export const ModalForm = ({ show, handleClose, handleSave, product, Title, Description, Price, Close, EditItem, Images, SaveChanges }) => {
   const [editedProduct, setEditedProduct] = useState({
@@ -40,9 +41,14 @@ export const ModalForm = ({ show, handleClose, handleSave, product, Title, Descr
 
   return (
     <Modal show={show} onHide={handleClose}>
-      <Modal.Header closeButton>
+      {/* <Modal.Header closeButton>
         <Modal.Title>{EditItem}</Modal.Title>
-      </Modal.Header>
+      </Modal.Header> */}
+      <div className='d-flex justify-content-between mx-4 my-4'>
+          <h3>{EditItem}</h3>
+          <span onClick={handleClose} style={{cursor:'pointer'}} ><IoCloseSharp size={24} /></span>
+
+        </div>
       <Modal.Body>
         <Form onSubmit={handleSubmit}>
           <Form.Group className="mb-3">

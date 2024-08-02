@@ -15,7 +15,7 @@ const DeleteModel = ({
   setDashboardGet
 }) => {
 
-  const {product,refresh, setRefresh}=useContext(Mywebcontextcall);
+  const {product,refresh, setRefresh,searchData, setSearchData}=useContext(Mywebcontextcall);
 
   const baseURI = `https://student-project-tau.vercel.app/api/product/deleteproduct/${selectedProduct}`;
   const baseURIget = `https://student-project-tau.vercel.app/api/product/getallproduct`;
@@ -40,6 +40,7 @@ const DeleteModel = ({
 
     }
     finally{
+      setSearchData("");
       setRefresh(true);
     }
   };

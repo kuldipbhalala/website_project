@@ -2,30 +2,19 @@ import React, { useContext, useState } from 'react'
 import { Modal, Button, Form } from 'react-bootstrap';
 import axios from 'axios';
 import Mywebcontextcall from './mywebcontext/Mywebcontext';
-import { IoCloseSharp } from "react-icons/io5";
 
-function AddModel({ addshow, handleAddClose, onProductAdded, formData, setFormData }) {
-
-  const { setRefresh, setSearchData } = useContext(Mywebcontextcall);
+function AddModel({ addshow, handleAddClose, onProductAdded,formData,setFormData}) {
+      
+  const {setRefresh, setSearchData } = useContext(Mywebcontextcall);
 
   const handleInputChange = (e) => {
     const { name, value, files } = e.target;
     setFormData({
       ...formData,
-      [name]: value
+      [name]: name === 'images' ? files[0] : value
     });
   };
-
-  const handleImageChange = (e) => {
-    const files = Array.from(e.target.files);
-    const newGallery = files.map(file => ({
-      url: URL.createObjectURL(file),
-      file: file
-    }));
-
-    setFormData(prev => ({ ...prev, gallery: newGallery }));
-  };
-
+  
 
   const handleaddData = async () => {
 
@@ -35,11 +24,9 @@ function AddModel({ addshow, handleAddClose, onProductAdded, formData, setFormDa
       data.append('title', formData.title);
       data.append('desc', formData.desc);
       data.append('price', formData.price);
-      formData?.gallery?.forEach((img) => {
-        if (img.file) {
-          data.append(`gallery`, img.file);
-        }
-      });
+      if (formData.images) {
+        data.append('gallery', formData.images);
+      }
 
       const response = await axios.post('https://student-project-tau.vercel.app/api/product/addproduct', data, {
         headers: {
@@ -71,14 +58,9 @@ function AddModel({ addshow, handleAddClose, onProductAdded, formData, setFormDa
   return (
     <div>
       <Modal show={addshow} onHide={handleAddClose}>
-        {/* <Modal.Header  closeButton>
+        <Modal.Header closeButton>
           <Modal.Title>New Product</Modal.Title>
-        </Modal.Header> */}
-        <div className='d-flex justify-content-between mx-4 my-4'>
-          <h3>Add Product</h3>
-          <span onClick={handleAddClose} style={{cursor:'pointer'}} ><IoCloseSharp size={24} /></span>
-
-        </div>
+        </Modal.Header>
         <Modal.Body>
           <Form>
             <Form.Group controlId="formTitle">
@@ -119,7 +101,8 @@ function AddModel({ addshow, handleAddClose, onProductAdded, formData, setFormDa
               <Form.Control
                 type="file"
                 multiple
-                onChange={handleImageChange}
+                name="images"
+                onChange={handleInputChange}
               />
             </Form.Group>
           </Form>
